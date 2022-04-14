@@ -1,5 +1,8 @@
 <?php
-require_once 'INCLUDES' . "../dataincludes/DataAccess.php";
+
+
+$path = realpath($_SERVER["DOCUMENT_ROOT"] . '\final-project\dataincludes\DataAccess.php');
+require_once $path;
 class UserModel
 {
 
@@ -33,9 +36,11 @@ class UserModel
         try {
             //this function will be needing to insert user in login table
 
-            $sql = "insert into db_user (firstname,lastname,gender,date of birth,phone,email,username,password) values ('" . $firstname . "','" . $lastname . "','" . $gender . "','" . $dob . "','" . $phone . "','" . $email . "','" . $userName . "','" . $pass . "',)";
+            $sql = "INSERT INTO db_users (firstname,lastname,gender,dob,phone,email,username,password) 
+                    VALUES ('" . $firstname . "','" . $lastname . "','" . $gender . "','" . $dob . "','" . $phone . "','" . $email . "','" . $userName . "','" . $pass . "')";
             $db =  new DataAccess();
             $db->executeQuery($sql);
+            return true;
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }

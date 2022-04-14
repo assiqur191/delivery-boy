@@ -53,7 +53,7 @@
 
 		<br><br>
 
-		<label>Don't have an account?</label> <a href="../view/registresion.html">Sign-up</a>
+		<label>Don't have an account?</label> <a href="../view/registresion.php">Sign-up</a>
 	</fieldset>
 
 </form>

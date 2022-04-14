@@ -11,7 +11,7 @@
     <div>
 <?php
 if (isset($post['create'])){
-    echo'user submitted.'
+    echo'user submitted.';
 }
 ?>
         
@@ -24,10 +24,10 @@ if (isset($post['create'])){
 
 				<tr height="40px">
                     <td width="150px">
-                        <label for="fName">First Name*:</label>
+                        <label for="firstname">First Name*:</label>
                     </td>
                     <td>
-                        <input type="text" name="fname" id="firstname" placeholder="please write your first name" autofocus>
+                        <input type="text" name="firstname" id="firstname" placeholder="please write your first name" autofocus>
                     </td>
                 </tr>
 
@@ -96,7 +96,7 @@ if (isset($post['create'])){
                 <tr height="40px">
 
                     <td width="150px">
-                        <label for="pass">Password*:</label>
+                        <label for="">Password*:</label>
                     </td>
                     <td>
                         <input type="Password" name="pass" id="pass">

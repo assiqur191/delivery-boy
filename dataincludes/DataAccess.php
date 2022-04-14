@@ -19,6 +19,9 @@ class DataAccess
     public function executeQuery($sql)
     {
         //here $sql is the query string
+        echo "<br>";
+        echo "I am in Execute query";
+        var_dump($sql);
 
         $result = $this->connection->query($sql);
         $this->connection->close();

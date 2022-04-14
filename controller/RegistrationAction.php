@@ -8,10 +8,15 @@
 </head>
 
 <body>
-	<?php
+<?php
+var_dump(realpath($_SERVER["DOCUMENT_ROOT"] . '\final-project\model\UserModel.php'));
+
+var_dump(realpath(dirname(__FILE__)) . '../model/UserModel' );
+$path = realpath($_SERVER["DOCUMENT_ROOT"] . '\final-project\model\UserModel.php');
+require_once $path;
 
 
-    
+
  
 $firstnameErr = $lastnameErr = $genderErr = $dobErr = $religionErr = $presentAddressErr = $emailErr = $personalWebsiteLinkErr = $userNameErr = $passErr = $confirmPassErr = $matchErr = "";
 
@@ -24,6 +29,16 @@ $flag = false;
 
 if ($_SERVER['REQUEST_METHOD'] === "POST")
  {
+	foreach ($_POST as $key => $value) {
+        echo "<tr>";
+        echo "<td>";
+        echo $key;
+        echo "</td>";
+        echo "<td>";
+        echo $value;
+        echo "</td>";
+        echo "</tr>";
+    }
 	function test($data)
 	{
 		$data = trim($data);
@@ -34,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 	}
 	
 
-	$firstname = test($_POST['firstame']);
+	$firstname = test($_POST['firstname']);
 	$lastname = test($_POST['lastname']);
 
 	if (isset($_POST['gender'])) {
@@ -83,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 		echo "<b>Error: You are not old enough</b>";
 		echo "<br><br>";
 	}
-	if (!empty($phone) and !preg_match('/^[0][1][0-9]{3}-[0-9]{6}/i', $phone)) {
+	if (!empty($phone) and !preg_match('/^[0][1][0-9]{3}[0-9]{6}/i', $phone)) {
 		$isValid = false;
 		echo "<b>Error: Invalid phone number</b>";
 		;
@@ -119,21 +134,20 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 		echo "<b>Error: Password didn't match</b>";
 		echo "<br><br>";
 	}
-	
-	
 
+	$userObj = new UserModel;
 
+	$insertUser = $userObj->insertUser($firstname, $lastname,$gender,$dob, $phone,$email,$userName,$pass);
 
-
-	if ($sql)
+	if ($insertUser)
 	{
-	 //echo "<h3>Data Insertion Successful</h3>";
-		  header('Location:../view/login.php');
+		// $path2 = realpath($_SERVER["DOCUMENT_ROOT"] . '\final-project\view\login.php');
+		// header('Location:'.$path2);
+		header('Location: ../view/login.php');
 	}
-	else{
-		echo "<h3>sql kam kore nai nai</h3>";
-	}
-}
+
+ }
+
     
 
 
@@ -143,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST")
 
 
 
-	<a href="../view/registration.html" >Go back </a>
+	<a href="../view/registration.php" >Go back </a>
 	
 </body>
 </html>
