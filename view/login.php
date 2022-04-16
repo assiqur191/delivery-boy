@@ -12,6 +12,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Login Form</title>
     <link rel="stylesheet" href="../view/css/login.css" type="text/css">
+    <script defer src="../controller/javascript/LoginScript .js"> </script>
 </head>
 <body>
 <form name="form2" id="form2" action="../controller/loginAction.php" method="post" novalidate>
@@ -23,10 +24,10 @@
 			<tr height="40px">
 
                     <td width="100px">
-                        <label for="uName">User Name*:</label>
+                        <label for="username">User Name*:</label>
                     </td>
                     <td>
-                        <input type="text" name="uName" id="uName" value="<?php if(isset($_COOKIE["uName"])) { echo $_COOKIE["uName"]; } ?>">
+                        <input type="text" name="username" id="username" value="<?php if(isset($_COOKIE["username"])) { echo $_COOKIE["username"]; } ?>">
                     </td>
             </tr>
 

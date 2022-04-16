@@ -1,8 +1,8 @@
 <?php 
 	session_start();
-	if(!isset($_SESSION['id'])){
-		header("LOCATION: ../view/login.php");
-	}
+	// if(!isset($_SESSION['id'])){
+	// 	header("LOCATION: ../view/login.php");
+	// }
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,6 +12,7 @@
 	<title>E-RESTAURANT</title>
 </head>
 <body>
+	<h1> HELLO </h1>
 <?php 
 	include "../view/include/header.php"; 
 
@@ -19,15 +20,15 @@
 ?>
 
 <?php
-	define("FILENAME", "../model/FoodMenuData.json");
-			$handle = fopen(FILENAME, "r");
+	define("FILENAME", "../model/FoodMenuData.json");{
+			// $handle = fopen(FILENAME, "r");
 			$arr1 = NULL;
-			$size = filesize(FILENAME);
-			if ($size > 0) {
-				$fr = fread($handle, $size);
-				$arr1 = json_decode($fr);
-				$fc = fclose($handle);
-				// var_dump($arr1);
+			// $size = filesize(FILENAME);
+			// if ($size > 0) {
+			// 	$fr = fread($handle, $size);
+			// 	$arr1 = json_decode($fr);
+			// 	$fc = fclose($handle);
+			// 	// var_dump($arr1);
 			}
 	if ($arr1 === NULL) {
 			echo "No record(s) found";

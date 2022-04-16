@@ -36,11 +36,35 @@ class UserModel
         try {
             //this function will be needing to insert user in login table
 
-            $sql = "INSERT INTO db_users (firstname,lastname,gender,dob,phone,email,username,password) 
-                    VALUES ('" . $firstname . "','" . $lastname . "','" . $gender . "','" . $dob . "','" . $phone . "','" . $email . "','" . $userName . "','" . $pass . "')";
+            $sql1 = "SELECT * from db_users WHERE username = '" . $userName . "';";
+            echo "sql running ". $sql1;
             $db =  new DataAccess();
-            $db->executeQuery($sql);
-            return true;
+            // Check if same username exists or not
+            $result =  $db->getData($sql1);
+
+            $count=$result->num_rows;
+            echo "COUTN IS HERE";
+            echo $count;
+            echo "COUTN IS HERE";
+            if ($count > 0)
+            {
+                return 2;
+            }
+            else{
+                $sql = "INSERT INTO db_users (firstname,lastname,gender,dob,phone,email,username,password) 
+                    VALUES ('" . $firstname . "','" . $lastname . "','" . $gender . "','" . $dob . "','" . $phone . "','" . $email . "','" . $userName . "','" . $pass . "')";
+                $db2 =  new DataAccess();
+                $db2->executeQuery($sql);
+                return 1;
+                
+            }
+            while ($row = $result->fetch_assoc()) {
+                echo "---------------";
+                echo $row['classtype']."<br>";
+            }
+
+
+            
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }

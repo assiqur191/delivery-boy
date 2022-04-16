@@ -10,77 +10,114 @@
 </head>
 <body>
 <?php
-	$flag = false;
+var_dump(realpath($_SERVER["DOCUMENT_ROOT"] . '\final-project\model\LoginModel.php'));
 
-	if ($_SERVER['REQUEST_METHOD'] === "POST") {
-		function test($data){
+var_dump(realpath(dirname(__FILE__)) . '../model/LoginModel.php' );
+$path = realpath($_SERVER["DOCUMENT_ROOT"] . '\final-project\model\LoginModel.php');
+require_once $path;
+
+
+	$flag = true;
+
+
+	if ($_SERVER['REQUEST_METHOD'] === "POST") 
+	{
+		function test($data)
+		{
 			$data = trim($data);
 			$data = stripcslashes($data);
 			$data = htmlspecialchars($data);
 			return $data;
 		}
+		foreach ($_POST as $key => $value) 
+		{
+			echo "<tr>";
+			echo "<td>";
+			echo $key;
+			echo "</td>";
+			echo "<td>";
+			echo $value;
+			echo "</td>";
+			echo "</tr>";
+		}
+		$userName = test($_POST['username']);
+		$pass = test($_POST['pass']);
 
-		$username = test($_POST['uName']);
-		$password = test($_POST['pass']);
-
-		if(!empty($_POST["rememberMe"])) {
-			setcookie ("uName",$username,time()+ (60 * 10), "/"); //10mins
-			setcookie ("pass",$password,time()+ (60 * 10), "/");
-		} else {
-			setcookie("uName","");
+		if(!empty($_POST["rememberMe"])) 
+		{
+			setcookie ("username",$userName,time()+ (60 * 10), "/"); //10mins
+			setcookie ("pass",$pass,time()+ (60 * 10), "/");
+		} else
+		 {
+			setcookie("username","");
 			setcookie("pass","");
 		}
 
-		if (empty($username) or empty($password)) {
+		if (empty($userName) or empty($pass)) 
+		{
+			$flag = false;
 			echo "<h2>Please fill up the form properly</h2>";
 			echo '<a href = "../view/login.php">Go Back</a>';
 		}
-		else{
-			define("FILENAME", "../model/users.json");
-			$handle = fopen(FILENAME, "r");
-			$size = filesize(FILENAME);
-			$arr1 = NULL;
+		else
+		{
+			$userObj3 =new LoginModel;
+			$validateLogin = $userObj3-> validateLogin($userName,$pass);
+			echo $validateLogin;
+			
+			if($validateLogin == 1)
+			{
+				echo "Validation done";
+				$_SESSION['username'] = $userName;
+				$_SESSION['password'] = $password;
+				header('Location: ../view/WelcomePage.php');
+				// header('Location: ../view/WelcomePage.php');
 
-			if($size > 0){
-				$fr = fread($handle, $size);
-				$arr1 = json_decode($fr);
-
-				for ($i=0; $i <count($arr1) ; $i++) { 
-					if($username === $arr1[$i]->userName and $password === $arr1[$i]->password){
-						$flag = true;
-						$_SESSION['id'] = $arr1[$i]->id;
-						$_SESSION['firstname'] = $arr1[$i]->firstname;
-						$_SESSION['lastname'] = $arr1[$i]->lastname;
-						$_SESSION['gender'] = $arr1[$i]->gender;
-						$_SESSION['dob'] = $arr1[$i]->dob;
-						$_SESSION['phone'] = $arr1[$i]->phone;
-						$_SESSION['email'] = $arr1[$i]->email;
-						$_SESSION['userName'] = $arr1[$i]->userName;
-						$_SESSION['password'] = $arr1[$i]->password;
-						$_SESSION['confirmPassword'] = $arr1[$i]->confirmPassword;
-						
-						header('Location: ../view/WelcomePage.php');
-					}
-				}
-				if ($flag === false) {
-						echo "<h3>invalid user name or password</h3>";;
-						echo '<a href="../view/login.php">Go Back</a>';
-					}
+				// $fr = fread($handle, $size);
 				
+				
+
+				// for ($i=0; $i <count($arr1) ; $i++)
+				//  { 
+				// 	if($userName === $arr1[$i]->username and $pass === $arr1[$i]->password)
+				// 	{
+				// 		$flag = true;
+				// 		// $_SESSION['id'] = $arr1[$i]->id;
+				// 		// $_SESSION['firstname'] = $arr1[$i]->firstname;
+				// 		// $_SESSION['lastname'] = $arr1[$i]->lastname;
+				// 		// $_SESSION['gender'] = $arr1[$i]->gender;
+				// 		// $_SESSION['dob'] = $arr1[$i]->dob;
+				// 		// $_SESSION['phone'] = $arr1[$i]->phone;
+				// 		// $_SESSION['email'] = $arr1[$i]->email;
+				// 		$_SESSION['username'] = $arr1[$i]->userName;
+				// 		$_SESSION['password'] = $arr1[$i]->password;
+				// 		// $_SESSION['confirmPassword'] = $arr1[$i]->confirmPass;
+						
+				// 		header('Location: ../view/WelcomePage.php');
+				// 	}
+				// }
+				// if ($flag === false)
+				//     {
+				// 		echo "<h3>invalid user name or password</h3>";;
+				// 		echo '<a href="../view/login.php">Go Back</a>';
+					
+			    //     }
 			}
-			else{
+			else
+			{
 				echo "<h3>Please create an account first</h3>";
-				echo "To create an account " . '<a href="../view/registresion.html">Click here</a>';
+				echo "To create an account " . '<a href="../view/registresion.php">Click here</a>';
 			}
-			fclose($handle);
-
-
-
+			
 		}
+		
+		
 	}
+
+
 
 ?>
 
 
 </body>
-</html>
+</html> 
